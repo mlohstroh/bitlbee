@@ -126,6 +126,14 @@ int bee_user_msg(bee_t *bee, bee_user_t *bu, const char *msg, int flags)
 	return st;
 }
 
+gboolean bee_user_remove(struct im_connection *ic, const char *handle)
+{
+  if(!ic) {
+    return FALSE;
+  }
+
+  return g_hash_table_remove(ic->bee_users, handle);
+}
 
 /* Groups */
 static bee_group_t *bee_group_new(bee_t *bee, const char *name)

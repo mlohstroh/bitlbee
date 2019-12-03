@@ -149,6 +149,7 @@ int bee_user_free(bee_t *bee, bee_user_t *bu);
 bee_user_t *bee_user_by_handle(bee_t *bee, struct im_connection *ic, const char *handle);
 int bee_user_msg(bee_t *bee, bee_user_t *bu, const char *msg, int flags);
 bee_group_t *bee_group_by_name(bee_t *bee, const char *name, gboolean creat);
+gboolean bee_user_remove(struct im_connection *ic, const char *handle);
 void bee_group_free(bee_t *bee);
 
 /* Callbacks from IM modules to core: */

@@ -227,9 +227,18 @@ void imcb_chat_remove_buddy(struct groupchat *c, const char *handle, const char 
 		bu = bee_user_by_handle(bee, ic, handle);
 	}
 
-	if (bee->ui->chat_remove_user && bu) {
-		bee->ui->chat_remove_user(bee, c, bu, reason);
-	}
+  if (bu) {
+    if (bee->ui->chat_remove_user) {
+      bee->ui->chat_remove_user(bee, c, bu, reason);
+    }
+
+    // Note: This is a bit XMPP only, because of how it works XMPP resources are now unique
+    // and that means that they have to be removed whenever they disconnect because they will
+    // never be valid.
+    bee_user_remove(ic, handle);
+    // Bee is dead.
+    bee_user_free(bee, bu);
+  }
 }
 
 int bee_chat_msg(bee_t *bee, struct groupchat *c, const char *msg, int flags)

@@ -353,10 +353,6 @@ void jabber_chat_pkt_presence(struct im_connection *ic, struct jabber_buddy *bud
 		if ((jc->flags & JCFLAG_ALWAYS_USE_NICKS) && !(bud->flags & JBFLAG_IS_ANONYMOUS)) {
 			imcb_buddy_nick_change(ic, bud->ext_jid, bud->resource);
 		}
-
-		if (s) {
-			*s = '/';
-		}
 	} else if (type) { /* type can only be NULL or "unavailable" in this function */
 		if ((bud->flags & JBFLAG_IS_CHATROOM) && bud->ext_jid) {
 			char *reason = NULL;
@@ -400,7 +396,6 @@ void jabber_chat_pkt_presence(struct im_connection *ic, struct jabber_buddy *bud
 				reason = g_strdup(status_text ? : status);
 			}
 
-      printf("Attempting to let %s leave", bud->ext_jid);
 			imcb_chat_remove_buddy(chat, bud->ext_jid, reason);
 			if (bud->flags & JBFLAG_IS_ANONYMOUS) {
 				imcb_remove_buddy(ic, bud->ext_jid, reason);
